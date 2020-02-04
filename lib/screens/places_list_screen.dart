@@ -37,6 +37,10 @@ class PlacesListScreen extends StatelessWidget {
                                 FileImage(greatplaces.items[i].image),
                           ),
                           title: Text(greatplaces.items[i].title),
+                          subtitle:
+                              greatplaces.items[i].location.address == null
+                                  ? Text('')
+                                  : Text(greatplaces.items[i].location.address),
                           onTap: () {},
                         ),
                       ),
