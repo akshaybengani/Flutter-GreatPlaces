@@ -30,7 +30,7 @@
 .pub/
 /build/
 lib/database/location_helper.dart
-android/app/src/main/AndroidManifest.xml
+/android/app/src/main/AndroidManifest.xml
 
 # Web related
 lib/generated_plugin_registrant.dart
