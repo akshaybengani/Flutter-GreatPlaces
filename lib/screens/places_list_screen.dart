@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:great_places/providers/great_places.dart';
 import 'package:great_places/screens/add_place_screen.dart';
+import 'package:great_places/screens/place_detail_screen.dart';
 import 'package:provider/provider.dart';
 
-class PlacesListScreen extends StatelessWidget {
+class PlacesListScreen extends StatelessWidget { 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +42,20 @@ class PlacesListScreen extends StatelessWidget {
                               greatplaces.items[i].location.address == null
                                   ? Text('')
                                   : Text(greatplaces.items[i].location.address),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                                PlaceDetailScreen.routename,
+                                arguments: greatplaces.items[i].id);
+                          },
+                          trailing: IconButton(
+                            onPressed: () async {
+                              await Provider.of<GreatPlaces>(context,listen: false).deletePlace(greatplaces.items[i].id);
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ),
                         ),
                       ),
               ),

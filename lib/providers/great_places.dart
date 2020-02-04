@@ -37,7 +37,7 @@ class GreatPlaces with ChangeNotifier {
       'title': newPlace.title,
       'image': newPlace.image.path,
       'loc_lat': newPlace.location.latitude,
-      'loc_lat': newPlace.location.longitude,
+      'loc_lng': newPlace.location.longitude,
       'address': newPlace.location.address,
     });
   }
@@ -58,4 +58,17 @@ class GreatPlaces with ChangeNotifier {
         .toList();
     notifyListeners();
   }
+
+  Future<void> deletePlace(String id) async {
+    await DBHelper.delete(id).then((_){
+      _items.removeWhere((element) => element.id == id);
+    });
+    notifyListeners();
+  }
+
+  Place findById(String id){
+    return _items.firstWhere((element) => element.id == id);
+  }
+
+
 }

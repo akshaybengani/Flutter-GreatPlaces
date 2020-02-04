@@ -28,6 +28,12 @@ class DBHelper {
     );
   }
 
+  static Future<void> delete(String id) async {
+    final db = await DBHelper.database();
+    await db.rawDelete("DELETE FROM user_places WHERE id = '$id'");
+  }
+
+
   static Future<List<Map<String, dynamic>>> getData(String table) async {
     final db = await DBHelper.database();
 
