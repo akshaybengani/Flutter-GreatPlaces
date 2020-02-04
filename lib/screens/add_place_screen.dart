@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:great_places/providers/great_places.dart';
 import 'package:great_places/widgets/image_input.dart';
+import 'dart:io';
+
+import 'package:provider/provider.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routename = "/addplacescreen";
@@ -10,7 +14,20 @@ class AddPlaceScreen extends StatefulWidget {
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   TextEditingController _titleController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey();
+  File _pickedImage;
+
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
+  void _savePlace() {
+    // Title check is empty or not or image is not empty
+    if (_titleController.text.isEmpty || _pickedImage == null) return;
+
+    Provider.of<GreatPlaces>(context, listen: false)
+        .addPlace(_titleController.text, _pickedImage);
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +42,20 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(16),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Title',
-                          border: OutlineInputBorder(),
-                        ),
-                        controller: _titleController,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 10,),
-                      ImageInput(),
-                    ],
-                  ),
+                      controller: _titleController,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ImageInput(_selectImage),
+                  ],
                 ),
               ),
             ),
@@ -50,7 +66,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
             color: Theme.of(context).accentColor,
             elevation: 0,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            onPressed: () {},
+            onPressed: _savePlace,
           ),
         ],
       ),
