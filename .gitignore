@@ -29,6 +29,7 @@ android/key.properties
 .packages
 .pub-cache/
 .pub/
+/Production/
 /build/
 lib/database/location_helper.dart
 /android/app/src/main/AndroidManifest.xml
